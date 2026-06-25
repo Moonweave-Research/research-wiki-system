@@ -1,0 +1,173 @@
+{
+  "queries": [
+    {
+      "id": "q1",
+      "query": "DEAnsect robot",
+      "expected_top_papers": ["paper:jiAutonomousUntetheredFast2019"],
+      "expected_concepts": ["concept:Dielectric_Elastomer_Actuator", "concept:Soft_Actuator"],
+      "community_id": 0,
+      "rationale": "Ji 2019 coined DEAnsect — unique term, singular match. No synonyms"
+    },
+    {
+      "id": "q2",
+      "query": "hydraulically amplified electrostatic",
+      "expected_top_papers": [
+        "paper:kellarisPeanoHASELActuatorsMusclemimetic2018",
+        "paper:wuMultimoduleElectrostaticallyActuated2016",
+        "paper:leroyMultimodeHydraulicallyAmplified2020"
+      ],
+      "expected_concepts": ["concept:Dielectric_Elastomer_Actuator", "concept:Self_Healing"],
+      "community_id": 0,
+      "rationale": "Kellaris 2018 introduced HASEL. Wu 2016 explored pre-HASEL multilayer electrostatic. Leroy 2020 multimode HASEL is direct semantic match (retrieval top-1)"
+    },
+    {
+      "id": "q3",
+      "query": "superparaelectric relaxor ferroelectric",
+      "expected_top_papers": [
+        "paper:panUltrahighEnergyStorage2021",
+        "paper:liLocalStructuralHeterogeneity2018",
+        "paper:dekaBiFeO3CeramicFilmRelaxor2017"
+      ],
+      "expected_concepts": ["concept:Relaxor_Ferroelectric", "concept:Ferroelectric_Material", "metric:energy_density"],
+      "community_id": 0,
+      "rationale": "Pan 2021 introduced SPE. Li 2018 and Deka 2017 are foundational relaxor ferroelectric works on energy storage — subject-matter matches even if not SPE-specific"
+    },
+    {
+      "id": "q4",
+      "query": "shape monolithic transformation LC",
+      "expected_top_papers": ["paper:wang2004270182020"],
+      "expected_concepts": ["concept:Liquid_Crystal_Elastomer", "concept:Photothermal_Actuation"],
+      "community_id": 1,
+      "rationale": "Wang 2020 demonstrates monolithic 2D-to-3D shape transformation via photoresponsive LC director field programming — specific, likely unique"
+    },
+    {
+      "id": "q5",
+      "query": "underwater locomotion liquid crystal",
+      "expected_top_papers": ["paper:designedresearch_hBioinspiredUnderwaterLocomotion2020"],
+      "expected_concepts": ["concept:Liquid_Crystal_Elastomer", "concept:Azobenzene", "concept:Biomimetics"],
+      "community_id": 1,
+      "rationale": "Bioinspired underwater locomotion modes (crawl/walk/jump/swim) driven by light in LC gels is uniquely described in this paper"
+    },
+    {
+      "id": "q6",
+      "query": "liquid crystal elastomer haptic",
+      "expected_top_papers": [
+        "paper:fowler2103806182021",
+        "paper:heElectricallyControlledLiquid2019"
+      ],
+      "expected_concepts": ["concept:Liquid_Crystal_Elastomer", "concept:Haptic", "metric:electric_field"],
+      "community_id": 1,
+      "rationale": "Fowler 2021 (canonical id, duplicate of fowler...a) details LCEs with high modulus contrast for directional actuation. He 2019 is electrically controlled LCE — semantic match for haptic-related actuation"
+    },
+    {
+      "id": "q7",
+      "query": "azobenzene graphene oxide shape",
+      "expected_top_papers": ["paper:choPhotoTriggeredShapeReconfiguration2021"],
+      "expected_concepts": ["concept:Azobenzene", "concept:Graphene_Oxide", "concept:Liquid_Crystal_Network"],
+      "community_id": 2,
+      "rationale": "Cho 2021 patterns rGO on azo-LCN film for photo-triggered shape reconfiguration — community 2 at the Graphene/LCN interface"
+    },
+    {
+      "id": "q8",
+      "query": "LIG PDMS Joule heater stretchable",
+      "expected_top_papers": ["paper:heStretchableSuperhydrophobicLaserinduced2025"],
+      "expected_concepts": ["concept:Laser_Induced_Graphene", "concept:Graphene", "mechanism:electrothermal_actuation"],
+      "community_id": 2,
+      "rationale": "He 2025 reports stretchable icephobic LIG/PDMS Joule heaters combining superhydrophobicity and fast electrothermal heating"
+    },
+    {
+      "id": "q9",
+      "query": "polypyrrole aramid nanofiber hydrogel",
+      "expected_top_papers": ["paper:heHybridAssemblyPolymeric2023"],
+      "expected_concepts": ["concept:Hydrogel", "concept:Conducting_Polymer", "mechanism:self_assembly"],
+      "community_id": 3,
+      "rationale": "He 2023 reports hybrid polypyrrole/aramid nanofiber/PVA electroconductive hydrogel validated with cardiomyocytes"
+    },
+    {
+      "id": "q10",
+      "query": "soft electrothermal actuator microfilament",
+      "expected_top_papers": ["paper:caoHighperformanceLowvoltageSoft2019"],
+      "expected_concepts": ["concept:Polyimide", "concept:Soft_Actuator", "mechanism:electrothermal_actuation"],
+      "community_id": 3,
+      "rationale": "Cao 2019 uses PI/PDMS bimorph with EHD-printed metallic microfilament heater to build low-voltage soft grippers"
+    },
+    {
+      "id": "q11",
+      "query": "유전 엘라스토머가 1 kV 미만의 낮은 전압에서 어떻게 큰 변형을 낼 수 있는가",
+      "expected_top_papers": ["paper:sungHighkZwitterionicDielectric2025"],
+      "expected_concepts": ["concept:Dielectric_Elastomer_Actuator"],
+      "community_id": 0,
+      "known_failure": "Korean mechanism + quantitative threshold (sub-kV) query. mpnet-multilingual ranks Sung 2025 at #36/50 — semantically related DEA facts crowd top-10. Pure dense retrieval limit; needs reranker (Qwen3-Reranker tier) or query expansion to surface. Tracked for Item 8 / reranker layer work.",
+      "rationale": "HARDER: Korean-only mechanism question, no English jargon. Sung 2025 introduces high-k zwitterionic dielectric enabling sub-kV actuation"
+    },
+    {
+      "id": "q12",
+      "query": "carbon nanotube reinforced liquid crystal elastomer for low-field actuation",
+      "expected_top_papers": ["paper:kimIntelligentlyActuatingLiquid2019"],
+      "expected_concepts": ["concept:Liquid_Crystal_Elastomer", "concept:Carbon_Nanotube"],
+      "community_id": 1,
+      "rationale": "HARDER: cross-concept LCE+CNT, requires intersection. Kim 2019 has 8 facts at this intersection"
+    },
+    {
+      "id": "q13",
+      "query": "light-driven shape change polymer that swims and crawls underwater like an animal",
+      "expected_top_papers": ["paper:designedresearch_hBioinspiredUnderwaterLocomotion2020"],
+      "expected_concepts": ["concept:Liquid_Crystal_Elastomer", "concept:Biomimetics"],
+      "community_id": 1,
+      "rationale": "HARDER: pure description, no technical jargon (no LCE / azobenzene named). Tests embedding's semantic abstraction"
+    },
+    {
+      "id": "q14",
+      "query": "ionic liquid based capacitive pressure sensor with electrical double layer formation",
+      "expected_top_papers": ["paper:kimEnhancedSensitivityIontronic2020"],
+      "expected_concepts": [],
+      "community_id": 0,
+      "rationale": "HARDER: niche topic (iontronic graphene tactile sensor) at edge of vault coverage"
+    },
+    {
+      "id": "q15",
+      "query": "강유전 폴리머의 초고에너지밀도 저장을 위한 superparaelectric 전략",
+      "expected_top_papers": ["paper:panUltrahighEnergyStorage2021"],
+      "expected_concepts": ["concept:Relaxor_Ferroelectric", "concept:Ferroelectric_Material"],
+      "community_id": 0,
+      "rationale": "HARDER: Korean+English mixed, paraphrase of q3 (which used English-only specific terms)"
+    },
+    {
+      "id": "q16",
+      "query": "review of ferroelectric materials for energy harvesting and storage applications",
+      "expected_top_papers": [
+        "paper:dekaBiFeO3basedRelaxorFerroelectrics2021",
+        "paper:shkuratovReviewFerroelectricMaterials2022",
+        "paper:zhaoHighPerformanceRelaxorFerroelectric2019"
+      ],
+      "expected_concepts": ["concept:Ferroelectric_Material"],
+      "community_id": 0,
+      "rationale": "HARDER: 'review' is a generic term with multiple equally-valid review answers. Deka 2021 (BiFeO3-based relaxor ferroelectrics for energy storage review) is the Qwen3-Reranker top-1 (most direct title-keyword match on 'energy storage'); Shkuratov 2022 is a broader review of ferroelectrics for high-power devices; Zhao 2019 is the dense top-1 (relaxor ferroelectric for energy storage). All three accepted."
+    },
+    {
+      "id": "q17",
+      "query": "untethered soft robot with pneumatic ring oscillator for self-regulated locomotion",
+      "expected_top_papers": ["paper:prestonSoftRingOscillator2019"],
+      "expected_concepts": ["concept:Soft_Actuator", "concept:Pneumatic_Actuator"],
+      "community_id": 3,
+      "rationale": "HARDER: cross-concept Soft+Pneumatic, very specific niche (ring oscillator). Tests whether traversal helps reach the right paper"
+    },
+    {
+      "id": "q18",
+      "query": "액정 엘라스토머 기반 수중 이동 로봇",
+      "expected_top_papers": ["paper:designedresearch_hBioinspiredUnderwaterLocomotion2020"],
+      "expected_concepts": ["concept:Liquid_Crystal_Elastomer", "concept:Biomimetics"],
+      "community_id": 1,
+      "rationale": "Korean rephrase of q5: tests multilingual embedding on '수중 이동' (underwater locomotion) + '액정 엘라스토머' (LC elastomer)",
+      "known_failure": "BioinspiredUnderwaterLocomotion2020 falls outside the dense candidate pool (rank=None across all 12 alpha/decay baseline configs in mpnet retriever, top-50). Korean '수중 이동 로봇' maps to a different semantic neighborhood than the English title. Rerank cannot recover what retrieval doesn't surface. Needs candidate_limit lift, hybrid keyword fallback, or query expansion. Tracked alongside q11 as retrieval-recall ceiling."
+    },
+    {
+      "id": "q19",
+      "query": "저전압 마이크로필라멘트 히터를 이용한 소프트 액추에이터",
+      "expected_top_papers": ["paper:caoHighperformanceLowvoltageSoft2019"],
+      "expected_concepts": ["concept:Soft_Actuator", "mechanism:electrothermal_actuation"],
+      "community_id": 3,
+      "rationale": "Korean rephrase of q10: tests multilingual embedding on '저전압' (low-voltage) + '마이크로필라멘트' (microfilament) + '소프트 액추에이터' (soft actuator)"
+    }
+  ]
+}

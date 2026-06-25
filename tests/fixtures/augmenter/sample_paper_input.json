@@ -1,0 +1,19 @@
+{
+  "__comment": "existing_facts use only fact_type+text keys — build_prompt reads only those two",
+  "paper_id": "paper:fowler2103806182021",
+  "existing_facts": [
+    {
+      "fact_type": "Claim",
+      "text": "The inherent modulus contrast of these LCEs (when coated with compliant electrodes) directly convert an electric field to a directional expansion of 20%."
+    },
+    {
+      "fact_type": "Claim",
+      "text": "Here, a materials chemistry is detailed to prepare liquid crystal elastomers (LCEs) with a 14:1 modulus contrast and increase in dielectric constant to enhance electromechanical deformation."
+    },
+    {
+      "fact_type": "Claim",
+      "text": "The electromechanical response of LCE actuators is observed upon application of voltage ranging from 0.5 to 6 kV."
+    }
+  ],
+  "paper_text": "The integration of soft, stimuli-responsive materials in robotic systems is a promising approach to introduce dexterous and delicate manipulation of objects. Electrical control of mechanical response offers many benefits in robotic systems including the availability of this energy input, the associated response time, magnitude of actuation, and opportunity for self-regulation. Here, a materials chemistry is detailed to prepare liquid crystal elastomers (LCEs) with a 14:1 modulus contrast and increase in dielectric constant to enhance electromechanical deformation. The inherent modulus contrast of these LCEs (when coated with compliant electrodes) directly convert an electric field to a directional expansion of 20%. The deformation of these materials is rapid, reaching strain rates of 18% s−1."
+}

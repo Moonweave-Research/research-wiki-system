@@ -1,0 +1,5 @@
+/OPERATIONS.md /404.html 404
+/scripts/* /404.html 404
+/.wrangler/* /404.html 404
+/.git/* /404.html 404
+/.DS_Store /404.html 404

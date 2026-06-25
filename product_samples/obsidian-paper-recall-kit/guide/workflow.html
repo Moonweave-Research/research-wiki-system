@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>핵심 흐름 | Paper Recall</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <nav class="nav">
+    <div class="shell nav-inner">
+      <a class="brand" href="./index.html"><span class="brand-mark"></span>Paper Recall</a>
+      <div class="nav-links">
+        <a href="./beginner.html">초심자</a>
+        <a href="./ai-first.html">AI 루트</a>
+        <a href="./scenarios.html">시나리오</a>
+        <a href="./advanced.html">고급</a>
+        <a href="../index.html">소개</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="shell hero">
+    <span class="kicker">핵심 흐름</span>
+    <h1>요약을 쌓지 말고, 돌아오는 길을 만듭니다.</h1>
+    <p class="lead">
+      논문 노트는 혼자 있으면 쉽게 묻힙니다. 개념과 질문을 붙이면 같은 논문을
+      여러 방향에서 다시 찾을 수 있습니다. 다만 질문과 미팅은 처음부터 의무가 아니라,
+      실제로 다시 찾는 순간이 생길 때 붙이는 레이어입니다.
+    </p>
+  </header>
+
+  <main class="shell guide-layout">
+    <aside class="sidebar">
+      <b>목차</b>
+      <a href="./index.html">입구</a>
+      <a href="./beginner.html">초심자 세팅</a>
+      <a href="./ai-first.html">AI 빠른 루트</a>
+      <a class="active" href="./workflow.html">핵심 흐름</a>
+      <a href="./scenarios.html">실제 시나리오</a>
+      <a href="./advanced.html">고급 확장</a>
+      <a href="./anti-patterns.html">실패 패턴</a>
+      <a href="./templates.html">템플릿 해설</a>
+    </aside>
+
+    <div class="content">
+      <section class="panel">
+        <h2>기본 흐름</h2>
+        <pre>논문 노트
+  -> 개념 노트
+  -> 질문 노트
+  -> 미팅 노트
+  -> 다시 논문 노트</pre>
+        <p>
+          한 방향으로만 연결하지 않습니다. 논문에서 개념으로 가고, 질문에서 논문으로
+          돌아오고, 미팅 노트에서 다시 질문이 생기게 둡니다. 최소 운영은 논문 노트와
+          개념 노트만으로도 시작할 수 있습니다.
+        </p>
+      </section>
+
+      <section class="panel">
+        <h2>1. 논문 노트</h2>
+        <p>논문 노트는 읽은 내용을 모두 보관하는 곳이 아닙니다. 다시 찾을 단서를 남기는 곳입니다. 여기서는 AI로 초안을 만들면 가장 편합니다.</p>
+        <table>
+          <thead><tr><th>항목</th><th>질문</th><th>좋은 기준</th></tr></thead>
+          <tbody>
+            <tr><td>한 줄 기억</td><td>이 논문을 한 문장으로 떠올리면?</td><td>논문의 역할이 보인다.</td></tr>
+            <tr><td>키워드</td><td>나중에 어떤 단어로 검색할까?</td><td>내가 실제로 쓸 말을 적는다.</td></tr>
+            <tr><td>개념</td><td>어떤 이론, 방법, 사례, 데이터셋, 현상과 연결될까?</td><td>1개에서 3개면 충분하다.</td></tr>
+            <tr><td>다시 볼 이유</td><td>언제 이 논문을 다시 열까?</td><td>미팅, 리뷰, 실험 설계 같은 상황이 있다.</td></tr>
+          </tbody>
+        </table>
+        <pre>이 논문을 다시 찾기 위한 Obsidian 노트로 바꿔줘.
+긴 요약 말고 아래 항목만 짧게 줘.
+- 한 줄 기억
+- 검색 키워드 5개
+- 연결할 개념 후보 3개
+- 다시 볼 이유 후보 2개</pre>
+      </section>
+
+      <section class="panel">
+        <h2>2. 개념 노트</h2>
+        <p>
+          개념 노트는 위키의 중심입니다. 개념 하나에 논문 여러 개가 붙으면, 논문 제목을
+          몰라도 다시 찾을 수 있습니다. AI에게 개념 설명 초안을 맡기되, 관련 논문 링크는 직접 확인합니다.
+        </p>
+        <div class="callout">
+          <p>아래 LCE 예시는 샘플입니다. 다른 분야에서는 Scaling Law, Gene Delivery, Gig Economy처럼 자기 분야의 개념으로 바꿔 쓰면 됩니다.</p>
+        </div>
+        <pre>아래 논문 내용을 바탕으로 개념 노트 초안을 만들어줘.
+정의, 핵심 메커니즘, 관련 논문, 같이 볼 개념만 써줘.
+과장하지 말고 모르는 내용은 비워둬.</pre>
+        <pre># Liquid Crystal Elastomer
+
+## 핵심
+액정의 방향성과 고분자 탄성이 결합된 자극 반응성 재료.
+
+## 관련 논문
+- [[2020-christianson-lce-underwater-soft-robot]]
+
+## 같이 볼 개념
+- [[Soft Robot]]
+- [[Thermal Actuation]]</pre>
+      </section>
+
+      <section class="panel">
+        <h2>3. 질문 노트</h2>
+        <p>
+          질문 노트는 검색창에 가까운 노트입니다. 논문마다 억지로 만들지 말고, 제목을
+          잊어도 질문으로 다시 찾고 싶을 때 만듭니다. 멋진 제목보다 실제로 내가 떠올릴
+          문장을 씁니다. AI는 질문 후보를 뽑는 데 특히 유용합니다.
+        </p>
+        <table>
+          <thead><tr><th>분야</th><th>질문 노트 제목 예시</th></tr></thead>
+          <tbody>
+            <tr><td>AI / CS</td><td>모델 크기와 데이터 크기 중 무엇이 성능에 더 중요한가?</td></tr>
+            <tr><td>생명과학</td><td>in vivo delivery 효율을 높인 방법은?</td></tr>
+            <tr><td>인문사회</td><td>플랫폼 노동자의 자율성은 어떻게 측정했나?</td></tr>
+          </tbody>
+        </table>
+        <pre>이 논문을 나중에 다시 찾을 질문 제목 5개로 바꿔줘.
+논문 제목처럼 쓰지 말고, 연구자가 실제로 검색할 말로 써줘.</pre>
+        <pre># LCE로 underwater robot을 만든 논문은?
+
+## 바로 볼 논문
+- [[2020-christianson-lce-underwater-soft-robot]]
+
+## 관련 개념
+- [[Liquid Crystal Elastomer]]
+- [[Soft Robot]]
+
+## 지금까지의 답
+LCE 필름의 열 반응으로 물속 bending locomotion을 만든 논문이 있다.</pre>
+      </section>
+
+      <section class="panel">
+        <h2>4. 미팅 노트</h2>
+        <p>
+          미팅 노트는 일회성 회의록이 아니라, 미팅에서 나온 질문을 논문과 연결하는 곳입니다.
+          모든 회의를 기록할 필요는 없고, 다시 찾아야 할 논문이나 새 질문이 생겼을 때만 씁니다.
+          미팅 메모가 길면 AI에게 질문과 논문 액션만 추려 달라고 하면 됩니다.
+        </p>
+        <pre>아래 미팅 메모에서 Obsidian에 남길 것만 추려줘.
+1. 오늘 나온 질문
+2. 다시 찾아야 할 논문
+3. 새로 만들 질문 노트 제목
+4. 다음 액션</pre>
+        <pre># Meeting - 2026-06-09
+
+## 오늘 물어본 것
+- LCE 기반 underwater robot 예시를 다시 찾을 수 있는가?
+
+## 다시 찾아야 할 논문
+- [[2020-christianson-lce-underwater-soft-robot]]
+
+## 새로 생긴 질문
+- [[Thermal actuation을 쓰는 soft robot 예시는]]</pre>
+      </section>
+
+      <section class="panel">
+        <h2>운영 규칙</h2>
+        <ul>
+          <li>논문 1편에 개념 링크는 1개에서 3개만 붙입니다.</li>
+          <li>질문 노트는 필수 메모가 아니라 다시 시작할 위치입니다.</li>
+          <li>한 줄 기억이 없으면 그 논문은 나중에 다시 찾기 어렵습니다.</li>
+          <li>주간 회고 때 빈 개념 노트를 세 줄만 채웁니다.</li>
+          <li>AI를 쓴다면 요약 전체보다 키워드, 연결 개념, 질문 후보를 먼저 받습니다.</li>
+        </ul>
+      </section>
+
+      <div class="footer-nav">
+        <a class="button" href="./ai-first.html">AI 빠른 루트</a>
+        <a class="button" href="./scenarios.html">실제 시나리오</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="shell">논문 노트에서 질문 노트까지 이어지는 핵심 흐름.</div></footer>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<schema>
+Metric: a measured value WITH NUMBERS AND UNITS, e.g. 'tensile strength 12 MPa', 'response time 8 ms', 'energy density 4.2 Wh/kg'. Must contain a numeric magnitude and a unit. targets: ['metric:<snake_case>'].
+Material: a specific substance/composition used as a building block, e.g. 'PDMS elastomer matrix', 'polyaniline thin film', '4-cyano-4'-pentylbiphenyl (5CB)'. targets: ['material:<snake_case>'].
+Application: a use-case or device the work targets, e.g. 'soft robotic gripper', 'wearable strain sensor', 'flexible energy harvester'. targets: ['application:<snake_case>'].
+Mechanism: a 'how it works' statement explaining a physical/chemical process, e.g. 'PEDOT:PSS conducts via doped polaron hopping'. Only emit if it introduces a NEW mechanism target id not in the corpus's existing 15 mechanism nodes (buckling, charge_injection, cross_linking, diffusion, electroosmosis, electrothermal_actuation, electrowetting, ferroelectric_switching, joule_heating, magnetic_actuation, etc.).
+</schema>
+
+<paper_id>paper:fowler2103806182021</paper_id>
+
+<existing_facts>
+- [Claim] The inherent modulus contrast of these LCEs (when coated with compliant electrodes) directly convert an electric field t
+- [Claim] Here, a materials chemistry is detailed to prepare liquid crystal elastomers (LCEs) with a 14:1 modulus contrast and inc
+- [Claim] The electromechanical response of LCE actuators is observed upon application of voltage ranging from 0.5 to 6 kV.
+</existing_facts>
+
+<paper_text>
+The integration of soft, stimuli-responsive materials in robotic systems is a promising approach to introduce dexterous and delicate manipulation of objects. Electrical control of mechanical response offers many benefits in robotic systems including the availability of this energy input, the associated response time, magnitude of actuation, and opportunity for self-regulation. Here, a materials chemistry is detailed to prepare liquid crystal elastomers (LCEs) with a 14:1 modulus contrast and increase in dielectric constant to enhance electromechanical deformation. The inherent modulus contrast of these LCEs (when coated with compliant electrodes) directly convert an electric field to a directional expansion of 20%. The deformation of these materials is rapid, reaching strain rates of 18% s−1.
+</paper_text>
+
+Emit a JSON array of NEW facts of types Metric / Material / Application / Mechanism that are present in <paper_text> but not in <existing_facts>. Each item must have keys: fact_type, text, evidence, targets. targets must be prefixed ids like 'metric:<snake_case>' / 'material:<snake_case>' / 'application:<snake_case>' / 'mechanism:<snake_case>'. Prefer snake_case ids that read naturally. Return JSON ARRAY ONLY — no markdown fences, no commentary. Empty array [] if nothing new applies.

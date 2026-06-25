@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Research Wiki Skill Prompt Kit</title>
+  <meta name="description" content="Obsidian Research Wiki를 Codex 또는 Claude Code용 스킬로 바꾸는 프롬프트 키트">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Research Wiki Skill Prompt Kit">
+  <meta property="og:description" content="전편에서 만든 Obsidian Research Wiki를 AI 에이전트가 불러 쓸 수 있게 만드는 스킬화 프롬프트">
+  <meta property="og:image" content="https://research-wiki-skill-kit.pages.dev/assets/obsidian-graph-view.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="author" content="Moon (@phd.ai.log)">
+  <style>
+    :root {
+      --paper: #f6f8fb;
+      --ink: #161719;
+      --muted: #72757d;
+      --line: #dbe3ee;
+      --panel: #ffffff;
+      --code: #101214;
+      --blue: #0b6fdc;
+      --green: #0b6b57;
+      --amber: #0b6fdc;
+      --shadow: 0 18px 54px rgba(30, 28, 24, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 18% 12%, rgba(11, 111, 220, 0.08), transparent 32%),
+        linear-gradient(90deg, rgba(11,111,220,0.045) 1px, transparent 1px),
+        linear-gradient(rgba(11,111,220,0.035) 1px, transparent 1px),
+        var(--paper);
+      background-size: 28px 28px;
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      letter-spacing: 0;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .shell {
+      width: min(1040px, calc(100vw - 36px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(227, 222, 212, 0.88);
+      background: rgba(251, 250, 247, 0.86);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 58px;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .mark {
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--ink);
+      border-radius: 5px;
+      display: grid;
+      place-items: center;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      line-height: 1;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 13px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .nav-button {
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: #fff;
+      padding: 9px 13px;
+      border-radius: 999px;
+      font-weight: 750;
+    }
+
+    .hero {
+      padding: 76px 0 44px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 44px;
+      align-items: end;
+    }
+
+    .eyebrow {
+      margin: 0 0 16px;
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 850;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 820px;
+      font-size: clamp(42px, 7vw, 82px);
+      line-height: 0.98;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 680px;
+      margin: 24px 0 0;
+      color: #3c3f44;
+      font-size: 19px;
+      line-height: 1.72;
+      font-weight: 500;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    .hero-visual {
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-visual img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+    }
+
+    .hero-visual figcaption {
+      padding: 14px 16px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      border-top: 1px solid var(--line);
+      background: #fbfdff;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 16px;
+      border: 1px solid var(--ink);
+      border-radius: 8px;
+      background: var(--ink);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .button.secondary {
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .button.copy-ok {
+      border-color: var(--green);
+      background: var(--green);
+    }
+
+    .summary-band {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.58);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+    }
+
+    .summary-item {
+      padding: 22px;
+      border-left: 1px solid var(--line);
+      min-height: 126px;
+      background: rgba(251, 250, 247, 0.62);
+    }
+
+    .summary-item:first-child { border-left: 0; }
+
+    .summary-item b {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    .summary-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    main {
+      padding: 48px 0 80px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px;
+      margin: 0 0 18px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .section-copy {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    .prompt-stack {
+      display: grid;
+      gap: 22px;
+    }
+
+    .prompt-block {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .prompt-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfdff;
+    }
+
+    .prompt-title {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .prompt-title strong {
+      font-size: 17px;
+      letter-spacing: 0;
+    }
+
+    .prompt-title span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .copy-button {
+      flex: 0 0 auto;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: #fff;
+      border-radius: 8px;
+      padding: 10px 13px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .copy-button.copied {
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    pre {
+      margin: 0;
+      padding: 20px;
+      background: var(--code);
+      color: #eef2f4;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.72;
+      white-space: pre-wrap;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
+
+    .download-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .download {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .download b {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .download p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .note {
+      margin-top: 28px;
+      border-left: 4px solid var(--amber);
+      padding: 14px 16px;
+      background: rgba(179, 92, 0, 0.08);
+      color: #4c3a2c;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .footer {
+      padding: 36px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 760px) {
+      .shell {
+        width: min(100vw - 24px, 1040px);
+      }
+
+      .nav-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 12px 0;
+      }
+
+      .nav-links {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 2px;
+      }
+
+      .hero {
+        padding: 52px 0 34px;
+        display: block;
+      }
+
+      .lead {
+        font-size: 16px;
+      }
+
+      .hero-visual {
+        margin-top: 30px;
+      }
+
+      .summary-grid,
+      .download-row {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-item,
+      .summary-item:first-child {
+        border-left: 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .summary-item:first-child {
+        border-top: 0;
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .prompt-top {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .copy-button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="shell nav-inner">
+      <a class="brand" href="./"><span class="mark">S</span>Research Wiki Skill Kit</a>
+      <div class="nav-links">
+        <a href="#main">메인</a>
+        <a href="#qa">QA</a>
+        <a href="#test">테스트</a>
+        <a class="nav-button" href="#main">복사하기</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="shell hero">
+    <div>
+      <p class="eyebrow">전편 다음 단계 · Obsidian Research Wiki -> AI Skill</p>
+      <h1>내 연구 위키를 AI가 불러오게 만드는 프롬프트</h1>
+      <p class="lead">
+        지난번에 만든 Obsidian Research Wiki를 Codex나 Claude Code가 직접 탐색하고,
+        근거 파일을 확인한 뒤 답하게 만드는 스킬 생성 프롬프트입니다.
+        이미 있는 볼트를 새로 갈아엎기보다, AI가 그 구조를 잘 찾아 쓰게 만드는 쪽에 가깝습니다.
+      </p>
+      <div class="hero-actions">
+        <a class="button" href="#main">메인 프롬프트 복사</a>
+        <a class="button secondary" href="./downloads/PROMPT_KIT.md" download>전체 md 받기</a>
+      </div>
+    </div>
+    <figure class="hero-visual" aria-label="Obsidian Research Wiki 그래프 예시">
+      <img src="./assets/obsidian-graph-view.png" alt="Obsidian에서 논문과 개념이 연결된 그래프 뷰 화면">
+      <figcaption>전편에서 만든 Research Wiki 구조를, 이번에는 AI 에이전트가 찾아 쓰게 만듭니다.</figcaption>
+    </figure>
+  </header>
+
+  <section class="summary-band">
+    <div class="shell summary-grid">
+      <div class="summary-item">
+        <b>1. 볼트 구조 확인</b>
+        <span>로컬 파일 접근이 가능한 환경에서 실제 폴더와 대표 노트를 보고 판단하게 합니다.</span>
+      </div>
+      <div class="summary-item">
+        <b>2. 스킬 생성</b>
+        <span>검색 순서, 답변 규칙, 근거 표시 방식을 SKILL.md 하나로 묶습니다.</span>
+      </div>
+      <div class="summary-item">
+        <b>3. QA와 테스트</b>
+        <span>추측, 환각, 근거 부족 문제를 한 번 더 걸러냅니다.</span>
+      </div>
+    </div>
+  </section>
+
+  <main class="shell">
+    <div class="section-head">
+      <div>
+        <h2>프롬프트 키트</h2>
+        <p class="section-copy">메인 프롬프트 하나로 시작하고, QA와 테스트는 생성된 스킬을 검수할 때 사용하세요.</p>
+      </div>
+    </div>
+
+    <div class="prompt-stack">
+      <article id="main" class="prompt-block">
+        <div class="prompt-top">
+          <div class="prompt-title">
+            <strong>메인 프롬프트</strong>
+            <span>Obsidian 볼트를 Codex/Claude Code용 스킬로 바꾸는 프롬프트</span>
+          </div>
+          <button class="copy-button" type="button" data-copy="main-prompt">복사</button>
+        </div>
+        <pre id="main-prompt">내 Obsidian Research Wiki를 Codex 또는 Claude Code에서 불러 쓸 수 있는 AI 에이전트용 스킬로 바꿔줘.
+
+목표는 단순합니다.
+
+내 볼트를 AI가 직접 탐색하고,
+논문 노트 / 아이디어 노트 / 질문 노트 / 정리 노트를 구분해서,
+필요할 때 근거 파일을 기반으로 답하게 만드는 것입니다.
+
+전편의 Obsidian Research Wiki 설계 프롬프트로 만든 볼트라면, 그 구조를 우선 존중해줘.
+기존 볼트를 새 구조로 갈아엎는 것이 아니라, AI가 이미 있는 구조를 잘 찾아 쓰게 만드는 것이 목표입니다.
+
+볼트 경로:
+[여기에 내 Obsidian 볼트 경로를 입력]
+
+원하는 스킬 이름:
+[예: research-wiki]
+
+스킬 이름 규칙:
+- 영어 소문자, 숫자, 하이픈만 사용해줘.
+- 공백, 한글, 특수문자는 쓰지 마.
+- "claude", "anthropic" 같은 특정 회사명은 이름에 넣지 마.
+
+먼저 해야 할 일:
+
+1. 실제 볼트 구조 확인
+- 경로가 열리는지 확인해줘.
+- 파일과 폴더를 실제로 보고 판단해줘.
+- 폴더 이름만 보고 과하게 단정하지 말고, 대표 파일 몇 개를 열어 구조를 확인해줘.
+- 파일 접근 권한이 없으면, 내가 붙여넣을 수 있는 폴더 트리와 예시 노트 양식을 먼저 요청해줘.
+
+2. 볼트 역할 추정
+- 어떤 폴더가 논문 노트인지 확인해줘.
+- 어떤 폴더가 아이디어 노트인지 확인해줘.
+- 어떤 폴더가 질문, 리서치 로그, 작업 기록인지 확인해줘.
+- 태그, 파일명 규칙, 링크 규칙이 있다면 반영해줘.
+- 확실하지 않은 부분은 확정하지 말고 "추정" 또는 "확인 필요"로 표시해줘.
+
+3. 스킬 설계
+이 볼트를 AI가 사용할 때 필요한 규칙을 설계해줘.
+
+반드시 포함할 규칙:
+- 저장된 노트 내용과 AI의 추론을 구분한다.
+- 논문 원문 내용, 내 메모, 아이디어를 섞어서 확정 사실처럼 말하지 않는다.
+- 답변할 때 가능한 한 근거 파일 경로를 남긴다.
+- 근거가 부족하면 부족하다고 말한다.
+- 처음부터 볼트 전체를 훑지 말고, 작은 검색에서 시작해 필요할 때만 범위를 넓힌다.
+- 사용자의 질문이 모호하면 먼저 검색 기준을 좁힌다.
+- 검색 결과가 없으면 비슷한 키워드로 한 번 더 시도하되, 없는 내용을 만들어내지 않는다.
+
+4. SKILL.md 작성
+아래 형식으로 바로 저장 가능한 SKILL.md를 작성해줘.
+
+필수 포함:
+- YAML frontmatter
+  - name
+  - description
+- 언제 이 스킬을 사용할지
+- 어떤 환경에서만 쓸 수 있는지
+- 볼트 경로
+- 먼저 확인할 폴더
+- 검색 순서
+- 답변 규칙
+- 근거 표시 규칙
+- 근거 부족 시 행동
+- 사용 예시 질문
+
+주의:
+- 과하게 복잡한 스크립트나 자동화를 만들지 마.
+- 현재 볼트 구조만으로 바로 쓸 수 있는 최소 스킬을 먼저 만들어줘.
+- 실제 파일 산출물은 우선 SKILL.md 하나로 제한해줘. README, 설치 가이드, 보조 문서는 만들지 마.
+- 불확실한 부분은 TODO로 남겨줘.
+- 로컬 파일 접근이 가능한 환경에서만 제대로 동작한다고 명시해줘.
+- 비공개 노트, 미공개 아이디어, 개인정보가 외부로 노출되지 않도록 주의 문구를 넣어줘.
+- 특정 에이전트 전용 기능에 과하게 의존하지 말고, Codex와 Claude Code 둘 다 이해할 수 있는 형태로 작성해줘.
+- 설치 위치는 사용하는 도구에 따라 달라질 수 있으니, Codex와 Claude Code 각각에 대해 "예시 경로"와 "확인 필요"를 분리해서 안내해줘.
+
+출력 형식:
+
+1. 볼트 구조 요약
+2. 스킬 설계 방향
+3. 최종 SKILL.md
+4. 설치 또는 적용 방법
+5. 테스트 질문 5개
+6. TODO / 확인이 필요한 부분</pre>
+      </article>
+
+      <article id="qa" class="prompt-block">
+        <div class="prompt-top">
+          <div class="prompt-title">
+            <strong>QA 검토 프롬프트</strong>
+            <span>생성된 SKILL.md의 추측, 환각, 경로 의존성을 확인합니다.</span>
+          </div>
+          <button class="copy-button" type="button" data-copy="qa-prompt">복사</button>
+        </div>
+        <pre id="qa-prompt">방금 만든 Obsidian Research Wiki용 SKILL.md를 검토해줘.
+
+목표는 "그럴듯한 스킬"이 아니라, 실제 연구 위키를 안전하게 찾아보고 답할 수 있는 스킬인지 확인하는 것입니다.
+
+다음 기준으로 문제를 찾아줘.
+
+1. 볼트 구조를 실제 확인 없이 과하게 추측한 부분이 있는가?
+2. 논문 내용, 내 메모, AI 추론이 섞일 위험이 있는가?
+3. 근거 파일 경로를 남기는 규칙이 충분히 명확한가?
+4. 검색 순서가 너무 넓거나 비효율적이지 않은가?
+5. 근거가 없을 때 "없다"고 말하는 규칙이 충분한가?
+6. 사용자가 직접 수정해야 할 경로, 폴더명, 규칙이 TODO로 남아 있는가?
+7. Codex와 Claude Code 중 한쪽에서만 통할 표현이 과하게 들어가 있지는 않은가?
+8. 스킬 설명(description)이 너무 좁거나 너무 넓어서 엉뚱한 상황에 호출될 위험은 없는가?
+9. 답변 품질을 높이는 규칙보다 장황한 설명이 더 많지는 않은가?
+10. 실제 테스트 질문으로 검증 가능한 구조인가?
+11. 실제 파일 산출물이 SKILL.md 하나로 정리되어 있는가?
+
+출력:
+
+1. 문제 목록
+2. 수정 방향
+3. 수정된 최종 SKILL.md
+4. 남겨야 할 TODO
+
+수정할 때는 스킬을 과하게 키우지 말고, 최소한의 규칙만 남겨줘.</pre>
+      </article>
+
+      <article id="test" class="prompt-block">
+        <div class="prompt-top">
+          <div class="prompt-title">
+            <strong>테스트 질문 생성 프롬프트</strong>
+            <span>스킬이 실제 파일을 찾고, 근거를 남기고, 모르면 모른다고 하는지 확인합니다.</span>
+          </div>
+          <button class="copy-button" type="button" data-copy="test-prompt">복사</button>
+        </div>
+        <pre id="test-prompt">방금 만든 Obsidian Research Wiki 스킬이 제대로 작동하는지 확인할 테스트 질문을 만들어줘.
+
+조건:
+
+- 쉬운 검색 질문 3개
+- 실제 노트 여러 개를 비교해야 하는 질문 3개
+- 근거 부족을 확인하는 질문 2개
+- AI가 함부로 단정하면 안 되는 함정 질문 2개
+
+각 질문마다 아래 항목을 함께 적어줘.
+
+- 질문
+- 이 질문이 테스트하는 기능
+- 좋은 답변의 기준
+- 실패한 답변의 징후
+
+특히 다음을 확인하고 싶습니다.
+
+- 실제 파일을 찾는지
+- 근거 파일 경로를 남기는지
+- 논문 내용과 내 메모를 구분하는지
+- 없는 내용을 만들어내지 않는지
+- 검색 결과가 부족할 때 부족하다고 말하는지</pre>
+      </article>
+    </div>
+
+    <div class="download-row" aria-label="다운로드">
+      <a class="download" href="./downloads/PROMPT_KIT.md" download>
+        <b>전체 md 다운로드</b>
+        <p>위 프롬프트를 하나의 Markdown 파일로 받습니다.</p>
+        <span class="button secondary">받기</span>
+      </a>
+      <a class="download" href="./downloads/obsidian-research-wiki-skill-prompt-kit.zip" download>
+        <b>zip 다운로드</b>
+        <p>README, 메인, QA, 테스트 프롬프트를 파일별로 받습니다.</p>
+        <span class="button secondary">받기</span>
+      </a>
+    </div>
+
+    <div class="note">
+      이 페이지는 DM으로 받은 사람에게 전달하기 위한 무료 배포 링크입니다. 개인 사용과 내부 공유는 가능하지만, 파일 재업로드, 유료 재판매, 출처 삭제, 자기 자료처럼 재배포하는 것은 허용하지 않습니다. 공유가 필요하면 이 공식 링크를 전달해주세요.
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="shell">
+      Moon · @phd.ai.log<br>
+      Research Wiki Skill Prompt Kit · Official link: research-wiki-skill-kit.pages.dev
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll("[data-copy]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const target = document.getElementById(button.dataset.copy);
+        if (!target) return;
+        const text = target.textContent.trim();
+        try {
+          await navigator.clipboard.writeText(text);
+          button.textContent = "복사됨";
+          button.classList.add("copied");
+          setTimeout(() => {
+            button.textContent = "복사";
+            button.classList.remove("copied");
+          }, 1600);
+        } catch (error) {
+          const range = document.createRange();
+          range.selectNodeContents(target);
+          const selection = window.getSelection();
+          selection.removeAllRanges();
+          selection.addRange(range);
+          button.textContent = "선택됨";
+        }
+      });
+    });
+  </script>
+</body>
+</html>

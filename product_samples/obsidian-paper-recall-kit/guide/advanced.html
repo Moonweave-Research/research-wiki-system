@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>고급 확장 | Paper Recall</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <nav class="nav">
+    <div class="shell nav-inner">
+      <a class="brand" href="./index.html"><span class="brand-mark"></span>Paper Recall</a>
+      <div class="nav-links">
+        <a href="./beginner.html">초심자</a>
+        <a href="./workflow.html">흐름</a>
+        <a href="./ai-first.html">AI 루트</a>
+        <a href="./scenarios.html">시나리오</a>
+        <a href="../index.html">소개</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="shell hero">
+    <span class="kicker">고급 확장</span>
+    <h1>숙련자는 구조를 유지하면서 자기 연구에 맞게 바꿉니다.</h1>
+    <p class="lead">
+      고급 확장은 더 많은 플러그인을 붙이는 것이 아닙니다. 논문 회수 구조가 깨지지
+      않는 선에서 Zotero, AI 초안, Dataview, 주간 회고, LLM Wiki식 확장을 붙이는 것입니다.
+    </p>
+  </header>
+
+  <main class="shell guide-layout">
+    <aside class="sidebar">
+      <b>목차</b>
+      <a href="./index.html">입구</a>
+      <a href="./beginner.html">초심자 세팅</a>
+      <a href="./ai-first.html">AI 빠른 루트</a>
+      <a href="./workflow.html">핵심 흐름</a>
+      <a href="./scenarios.html">실제 시나리오</a>
+      <a class="active" href="./advanced.html">고급 확장</a>
+      <a href="./anti-patterns.html">실패 패턴</a>
+      <a href="./templates.html">템플릿 해설</a>
+    </aside>
+
+    <div class="content">
+      <section class="panel">
+        <h2>고급 사용자의 기준</h2>
+        <ul class="checklist">
+          <li>논문 노트가 20개 이상 있고, 일부는 다시 찾기 어렵다.</li>
+          <li>Zotero나 reference manager를 이미 쓰고 있다.</li>
+          <li>AI로 논문 초안을 만들지만, 결과가 길고 비슷해진다.</li>
+          <li>개념 노트가 생겼지만 중복 개념이 늘고 있다.</li>
+          <li>노트를 검색하는 것보다, 질문으로 다시 꺼내고 싶다.</li>
+        </ul>
+      </section>
+
+      <section class="panel">
+        <h2>1. Zotero는 출처, Obsidian은 회수</h2>
+        <p>
+          Zotero는 citation과 PDF 위치를 안정적으로 관리합니다. Obsidian은 내가 왜
+          다시 봐야 하는지와 어떤 개념으로 찾을지를 관리합니다.
+        </p>
+        <table>
+          <thead><tr><th>도구</th><th>맡길 것</th><th>맡기지 않을 것</th></tr></thead>
+          <tbody>
+            <tr><td>Zotero</td><td>PDF, 저자, 연도, DOI, BibTeX key</td><td>내 연구 질문의 구조</td></tr>
+            <tr><td>Obsidian</td><td>한 줄 기억, 개념 연결, 질문, 미팅 맥락</td><td>정확한 서지 데이터 전체</td></tr>
+          </tbody>
+        </table>
+        <p>
+          배포형 starter vault에서는 <code>zotero_key</code>만 남겨도 충분합니다. 더 발전시키면
+          실제 Research Wiki처럼 <code>sources</code>, <code>pdf_path</code>, <code>status</code>,
+          <code>abstract</code>를 함께 남길 수 있습니다.
+        </p>
+      </section>
+
+      <section class="panel">
+        <h2>2. 태그는 적게, 개념은 링크로</h2>
+        <p>
+          태그는 상태와 큰 분류에 쓰고, 연구 개념은 링크로 남깁니다. 그래야 나중에
+          개념 노트가 실제 지식의 중심이 됩니다.
+        </p>
+        <pre>tags:
+  - paper
+  - done
+  - review-candidate
+
+연결할 개념:
+- [[Liquid Crystal Elastomer]]
+- [[Thermal Actuation]]</pre>
+        <div class="callout">
+          <p>
+            위 링크는 샘플 vault의 재료/로봇 예시입니다. 다른 분야에서는
+            <code>[[Scaling Law]]</code>, <code>[[Gene Delivery]]</code>,
+            <code>[[Gig Economy]]</code>처럼 자기 분야의 개념으로 바꿉니다.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>3. Dataview를 쓴다면 상태 확인에만</h2>
+        <p>
+          Dataview는 편하지만, 처음부터 모든 것을 dashboard로 만들면 시스템이 무거워집니다.
+          고급 사용자는 아래 정도만 확인해도 충분합니다.
+        </p>
+        <pre>TABLE status, year, zotero_key
+FROM "papers"
+WHERE type = "paper" AND status != "done"
+SORT year DESC</pre>
+        <p>
+          실제 Research Wiki처럼 <code>wiki/research/</code>를 논문 레이어로 쓰는 경우에는
+          <code>FROM "wiki/research"</code>로 바꿉니다. 목표는 예쁜 dashboard가 아니라,
+          방치된 논문 노트를 찾는 것입니다.
+        </p>
+      </section>
+
+      <section class="panel">
+        <h2>4. AI는 요약기가 아니라 구조화 보조입니다.</h2>
+        <p>
+          AI를 쓰면 논문 노트 초안을 빠르게 만들 수 있습니다. 하지만 그대로 붙여넣는 것이
+          아니라, 사람이 다시 찾을 수 있는 단서만 남기는 쪽이 오래 갑니다.
+        </p>
+        <pre>PDF나 abstract를 읽고 아래만 뽑아줘.
+- 한 줄 기억
+- 나중에 검색할 키워드
+- 연결할 개념 후보
+- 다시 볼 이유
+- 질문 노트 제목 후보</pre>
+      </section>
+
+      <section class="panel">
+        <h2>5. LLM Wiki식 확장은 선택입니다.</h2>
+        <p>
+          안드레이 카파시가 소개해서 유명해진 LLM Wiki 아이디어처럼, 사람이 읽기 좋은
+          지식베이스를 만들고 그 위에 LLM 검색이나 요약을 얹을 수 있습니다. 다만 이 가이드의
+          기본 구조는 LLM 없이도 작동해야 합니다.
+        </p>
+        <div class="callout">
+          <p>
+            먼저 사람이 다시 찾을 수 있는 노트를 만듭니다. 그다음 필요하면 LLM이 읽기 좋은
+            형태로 제목, 링크, 한 줄 기억, 질문 노트를 정리합니다.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>6. 주간 회고는 15분만</h2>
+        <ol>
+          <li>이번 주 새 논문 노트를 엽니다.</li>
+          <li>한 줄 기억이 없는 노트만 채웁니다.</li>
+          <li>빈 개념 노트를 세 줄만 채웁니다.</li>
+          <li>필요하면 질문 노트 하나에 관련 논문을 붙입니다.</li>
+          <li>다음 주에 찾을 질문 하나를 남깁니다.</li>
+        </ol>
+        <p>회고는 정리 시간이 아니라, 다음에 다시 시작할 위치를 만드는 시간입니다.</p>
+      </section>
+
+      <section class="panel">
+        <h2>7. 실제 Research Wiki로 발전시키는 경우</h2>
+        <p>
+          이 패키지는 배포형 starter vault입니다. 실제 운영형 Research Wiki로 키우면 폴더명과
+          역할이 달라질 수 있습니다.
+        </p>
+        <table>
+          <thead><tr><th>Starter vault</th><th>운영형 Research Wiki 예시</th><th>차이</th></tr></thead>
+          <tbody>
+            <tr><td><code>papers/</code></td><td><code>wiki/research/</code></td><td>Zotero/PDF/source metadata가 붙는 논문 레이어</td></tr>
+            <tr><td><code>concepts/</code></td><td><code>wiki/concepts/</code></td><td>여러 논문을 합성한 개념 레이어</td></tr>
+            <tr><td><code>questions/</code></td><td>선택형 또는 별도 workflow</td><td>검색 질문을 저장하는 사용자 레이어</td></tr>
+            <tr><td>수동 태그</td><td><code>wiki/meta/Tags/</code></td><td>자동 생성 reverse index로 관리 가능</td></tr>
+            <tr><td>Obsidian graph</td><td><code>.graph_index/</code></td><td>사용자가 편집하지 않는 생성 인덱스</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <div class="footer-nav">
+        <a class="button" href="./scenarios.html">실제 시나리오</a>
+        <a class="button" href="./anti-patterns.html">실패 패턴</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="shell">Zotero, AI 초안, Dataview, LLM Wiki식 확장 방향.</div></footer>
+</body>
+</html>
