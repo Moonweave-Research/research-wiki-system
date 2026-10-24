@@ -9,9 +9,20 @@ dependencies = [
     "python-igraph>=1.0.0",
     "pyyaml>=6.0",
     "scipy>=1.17.1",
-    "transformers>=4.51",
+    "transformers>=5.17.0",
     "watchdog>=4.0",
 ]
+
+[tool.uv]
+constraint-dependencies = [
+    "anyio>=4.14.2",
+    "certifi>=2026.10.19",
+    "filelock>=4.2.1",
+    "fsspec>=2026.6.0",
+    "urllib3>=2.8.0",
+]
+# fastembed caps Pillow below its security-fixed 13.x series; covered by compatibility tests.
+override-dependencies = ["pillow>=13.0.0,<14"]
 
 [tool.pytest.ini_options]
 pythonpath = [".", "apps/vault-ui"]
