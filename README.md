@@ -13,3 +13,14 @@ It intentionally excludes the private vault corpus:
 
 Use `tests/fixtures/sample-vault/` as the public-safe sample vault while testing
 system behavior outside the private observatory repository.
+
+
+## Embedding regression fixtures
+
+The embedding tests create synthetic JSONL facts and minimal SQLite compatibility
+metadata directly, without importing the excluded legacy GraphRAG package.
+Production embedding and query behavior are unchanged.
+
+```bash
+uv run pytest tests/test_wiki_fact_embeddings.py -q
+```

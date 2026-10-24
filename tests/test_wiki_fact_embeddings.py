@@ -1,6 +1,8 @@
 import json
 import builtins
 import time
+import sqlite3
+from dataclasses import dataclass, asdict
 
 import numpy as np
 import pytest
@@ -19,8 +21,33 @@ from scripts.search.wiki_fact_embeddings import (
     query_specificity_bonus,
     read_fact_records,
 )
-from legacy.graphrag.wiki_graph import write_index
-from legacy.graphrag.wiki_semantic_schema import SemanticFact
+@dataclass
+class SemanticFact:
+    paper_id: str
+    fact_id: str
+    fact_type: str
+    text: str
+    evidence: str
+    confidence: float
+    targets: list[str]
+
+
+def write_index(graph, index_dir, *, facts):
+    """Create synthetic JSONL facts and SQLite compatibility metadata locally."""
+    facts = list(facts)
+    _write_facts_jsonl(index_dir, facts)
+    with sqlite3.connect(index_dir / "graph.sqlite") as connection:
+        connection.executescript(
+            "CREATE TABLE IF NOT EXISTS nodes (id TEXT, kind TEXT, label TEXT, props_json TEXT);"
+            "CREATE TABLE IF NOT EXISTS edges (source TEXT, target TEXT, type TEXT);"
+            "DELETE FROM nodes; DELETE FROM edges;"
+        )
+        nodes = [(n["id"], n["kind"], n.get("label", ""), json.dumps(n)) for n in graph["nodes"]]
+        nodes.extend((f.fact_id, "Fact", f.text, json.dumps(asdict(f))) for f in facts)
+        connection.executemany("INSERT INTO nodes VALUES (?, ?, ?, ?)", nodes)
+        edges = [(e["source"], e["target"], e["type"]) for e in graph["edges"]]
+        edges.extend((f.fact_id, target, "ABOUT") for f in facts for target in f.targets)
+        connection.executemany("INSERT INTO edges VALUES (?, ?, ?)", edges)
 
 
 class FakeEmbeddingProvider:
